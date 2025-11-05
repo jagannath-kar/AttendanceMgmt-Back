@@ -1,0 +1,578 @@
+[{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8f1"
+  },
+  "empId": 1,
+  "empName": "Eren Yeager",
+  "isManager": true,
+  "managerName": "Eren Yeager",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb66e"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb66f"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb670"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb671"
+    },
+    {
+      "$oid": "6908f561d61428f4cfda99e1"
+    }
+  ],
+  "leave_id": [],
+  "updatedAt": {
+    "$date": "2025-11-03T18:33:05.956Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8f2"
+  },
+  "empId": 2,
+  "empName": "Kurosaki Ichigo",
+  "isManager": true,
+  "managerName": "Kurosaki Ichigo",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb672"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb673"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb674"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb675"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8f3"
+  },
+  "empId": 3,
+  "empName": "Ryan Smith",
+  "isManager": false,
+  "managerName": "Eren Yeager",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb676"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb677"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb678"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb679"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8f4"
+  },
+  "empId": 4,
+  "empName": "Chloe Kim",
+  "isManager": false,
+  "managerName": "Eren Yeager",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb67a"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb67b"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb67c"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb67d"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8f5"
+  },
+  "empId": 5,
+  "empName": "Ethan Chen",
+  "isManager": false,
+  "managerName": "Eren Yeager",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb67e"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb67f"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb680"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb681"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8f6"
+  },
+  "empId": 6,
+  "empName": "Sarah Brown",
+  "isManager": false,
+  "managerName": "Eren Yeager",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb682"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb683"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb684"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb685"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8f7"
+  },
+  "empId": 7,
+  "empName": "David Lee",
+  "isManager": false,
+  "managerName": "Eren Yeager",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb686"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb687"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb688"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb689"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8f8"
+  },
+  "empId": 8,
+  "empName": "Jessica Garcia",
+  "isManager": false,
+  "managerName": "Eren Yeager",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb68a"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb68b"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb68c"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb68d"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8f9"
+  },
+  "empId": 9,
+  "empName": "Kevin Wilson",
+  "isManager": false,
+  "managerName": "Eren Yeager",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb68e"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb68f"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb690"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb691"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8fa"
+  },
+  "empId": 10,
+  "empName": "Emily Taylor",
+  "isManager": false,
+  "managerName": "Eren Yeager",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb692"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb693"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb694"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb695"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8fb"
+  },
+  "empId": 11,
+  "empName": "Chris Martin",
+  "isManager": false,
+  "managerName": "Eren Yeager",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb696"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb697"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb698"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb699"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8fc"
+  },
+  "empId": 12,
+  "empName": "Hannah Scott",
+  "isManager": false,
+  "managerName": "Eren Yeager",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb69a"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb69b"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb69c"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb69d"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8fd"
+  },
+  "empId": 13,
+  "empName": "Michael Hall",
+  "isManager": false,
+  "managerName": "Kurosaki Ichigo",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb69e"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb69f"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6a0"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6a1"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8fe"
+  },
+  "empId": 14,
+  "empName": "Olivia King",
+  "isManager": false,
+  "managerName": "Kurosaki Ichigo",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb6a2"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6a3"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6a4"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6a5"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe8ff"
+  },
+  "empId": 15,
+  "empName": "James Adams",
+  "isManager": false,
+  "managerName": "Kurosaki Ichigo",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb6c2"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6c3"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6c4"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6c5"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe900"
+  },
+  "empId": 16,
+  "empName": "Isabella Wright",
+  "isManager": false,
+  "managerName": "Kurosaki Ichigo",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb6a6"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6a7"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6a8"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6a9"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe901"
+  },
+  "empId": 17,
+  "empName": "Jacob Baker",
+  "isManager": false,
+  "managerName": "Kurosaki Ichigo",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb6aa"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6ab"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6ac"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6ad"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe902"
+  },
+  "empId": 18,
+  "empName": "Ava Cooper",
+  "isManager": false,
+  "managerName": "Kurosaki Ichigo",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb6ae"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6af"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6b0"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6b1"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe903"
+  },
+  "empId": 19,
+  "empName": "William Perez",
+  "isManager": false,
+  "managerName": "Kurosaki Ichigo",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb6b2"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6b3"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6b4"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6b5"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe904"
+  },
+  "empId": 20,
+  "empName": "Mia Flores",
+  "isManager": false,
+  "managerName": "Kurosaki Ichigo",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb6b6"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6b7"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6b8"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6b9"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe905"
+  },
+  "empId": 21,
+  "empName": "Alex Johnson",
+  "isManager": false,
+  "managerName": "Kurosaki Ichigo",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb6ba"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6bb"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6bc"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6bd"
+    }
+  ],
+  "leave_id": []
+},
+{
+  "_id": {
+    "$oid": "6908d77432a8174766dbe906"
+  },
+  "empId": 22,
+  "empName": "Maya Patel",
+  "isManager": false,
+  "managerName": "Kurosaki Ichigo",
+  "totalSickLeaveTaken": 0,
+  "totalCasualLeaveTaken": 0,
+  "attendance_id": [
+    {
+      "$oid": "6908eb76cfbee54fd84eb6be"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6bf"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6c0"
+    },
+    {
+      "$oid": "6908eb76cfbee54fd84eb6c1"
+    }
+  ],
+  "leave_id": []
+}]
