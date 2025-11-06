@@ -10,19 +10,33 @@ const calculateWorkHours = (clockIn, clockOut) => {
     return parseFloat((diffMs / (1000 * 60 * 60)).toFixed(2));
 };
 
+// exports.getAllEmployees = async (req, res, next) => {
+//     try {
+//         const employees = await Employee.find({})
+//             .select('-attendance_id -leave_id'); 
+
+//         if (!employees || employees.length === 0) {
+//             return res.status(404).json({ message: 'No employees found' });
+//         }
+
+//         res.status(200).json(employees);
+//     } catch (error) {
+//         next(error);
+//     }
+// };
 exports.getAllEmployees = async (req, res, next) => {
-    try {
-        const employees = await Employee.find({})
-            .select('-attendance_id -leave_id'); 
+  try {
+    const employees = await Employee.find({}).select('-attendance_id -leave_id');
+    // console.log('Fetched employees:', employees); 
 
-        if (!employees || employees.length === 0) {
-            return res.status(404).json({ message: 'No employees found' });
-        }
-
-        res.status(200).json(employees);
-    } catch (error) {
-        next(error);
+    if (!employees || employees.length === 0) {
+      return res.status(404).json({ message: 'No employees found' });
     }
+
+    res.status(200).json(employees);
+  } catch (error) {
+    next(error);
+  }
 };
 
 exports.getEmployeeWithAllAttendance = async (req, res, next) => {

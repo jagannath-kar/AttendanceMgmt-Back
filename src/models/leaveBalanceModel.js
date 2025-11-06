@@ -1,3 +1,4 @@
+// module.exports = mongoose.model('Leave', leaveSchema, 'leaveBalance');
 const mongoose = require('mongoose');
 
 const leaveTypeSchema = new mongoose.Schema({
