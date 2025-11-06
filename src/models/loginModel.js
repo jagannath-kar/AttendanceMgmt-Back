@@ -1,22 +1,26 @@
+// src/models/loginModel.js
 const mongoose = require('mongoose');
-
+ 
 const loginSchema = new mongoose.Schema({
-  empRefId: {
-    type: Number, 
+  employee_id: {
+    type: Number,
     required: true,
     unique: true
-    
   },
-  employeeId: {
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'employee',
+  employee_ref_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Employee',
     required: true
   },
   password: {
     type: String,
     required: true
+  },
+  // hold the single active token (null when logged out)
+  activeToken: {
+    type: String,
+    default: null
   }
 }, { collection: 'login' });
-//inverse
-
+ 
 module.exports = mongoose.model('Login', loginSchema);

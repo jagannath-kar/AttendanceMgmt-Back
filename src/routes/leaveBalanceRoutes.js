@@ -1,19 +1,29 @@
 const express = require('express');
+const { validationResult } = require('express-validator');
 const router = express.Router();
-
+ 
+const { applyLeaveSchema } = require('../validators/applyLeaveSchema');
 const {
-    applyLeave,
-    updateLeaveStatus,
-    getLeaveBalance
+  applyLeave,
+  updateLeaveStatus,
+  getLeaveBalance
 } = require('../controllers/leaveBalanceController');
-
-// Apply for leave
-router.post('/leave-management/apply', applyLeave);
-
+ 
+// Apply for leave with validation
+router.post('/leave-management/apply', applyLeaveSchema, (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+  applyLeave(req, res);
+});
+ 
 // Update leave status (approve/reject)
 router.patch('/leave-management/status/:leaveManagementId', updateLeaveStatus);
-
+ 
 // Get leave balance for an employee
 router.get('/leave-management/balance/:empId', getLeaveBalance);
-
+ 
 module.exports = router;
+ 
+ 

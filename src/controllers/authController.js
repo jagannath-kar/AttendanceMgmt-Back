@@ -1,44 +1,70 @@
+// src/controllers/authController.js
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Login = require('../models/loginModel'); // adjust path
-const { add } = require('../utils/tokenBlacklist'); // adjust path to your blacklist helper
- 
-const COOKIE_NAME = 'token';
-const COOKIE_SECURE = process.env.NODE_ENV === 'production';
+const Login = require('../models/loginModel');
+const { add: addToBlacklist } = require('../utils/tokenBlacklist');
+require('dotenv').config();
  
 async function login(req, res) {
   try {
-    const { empRefId, password } = req.body;
-    if (!empRefId || !password) return res.status(400).json({ error: 'empRefId and password required' });
+    const { employee_id, password } = req.body;
+    if (employee_id == null || !password) {
+      return res.status(400).json({ error: 'employee_id and password required' });
+    }
  
-    // empRefId is number: find login doc by number
-    const login = await Login.findOne({ empRefId }).populate('employeeId').exec();
-    if (!login) return res.status(401).json({ error: 'Invalid credentials' });
+    // find login doc and populate employee details
+    const loginDoc = await Login.findOne({ employee_id }).populate('employee_ref_id').exec();
+    if (!loginDoc) return res.status(401).json({ error: 'Invalid credentials' });
  
-    const match = await bcrypt.compare(password, login.password);
+    // verify password
+    const match = await bcrypt.compare(password, loginDoc.password);
     if (!match) return res.status(401).json({ error: 'Invalid credentials' });
  
-    // payload contains login doc id (for passport lookup) plus optionally empRefId or employeeId
-    const payload = { id: login._id, empRefId: login.empRefId };
+    // ensure single active session: check if someone else has activeToken
+    if (loginDoc.activeToken) {
+      // verify if token still valid
+      try {
+        jwt.verify(loginDoc.activeToken, process.env.JWT_SECRET || 'default_jwt_secret');
+        // still valid -> block
+        return res.status(409).json({ error: 'Already logged in. Logout first.' });
+      } catch (err) {
+        // expired/invalid -> clear it and continue
+        await Login.findByIdAndUpdate(loginDoc._id, { $unset: { activeToken: "" } }).exec();
+      }
+    }
+ 
+    // create token
+    const payload = { id: loginDoc._id, employee_id: loginDoc.employee_id };
     const token = jwt.sign(payload, process.env.JWT_SECRET || 'default_jwt_secret', {
-      expiresIn: process.env.JWT_EXPIRES_IN || '1h',
+      expiresIn: process.env.JWT_EXPIRES_IN || '1h'
     });
  
-    // set cookie (httpOnly)
-    res.cookie(COOKIE_NAME, token, {
-      httpOnly: true,
-      secure: COOKIE_SECURE,
-      sameSite: 'lax',
-      maxAge: 1000 * 60 * 60 // 1 hour
-    });
+    // atomically set activeToken only if currently null (avoid race)
+    const updated = await Login.findOneAndUpdate(
+      { _id: loginDoc._id, $or: [{ activeToken: { $exists: false } }, { activeToken: null }] },
+      { $set: { activeToken: token } },
+      { new: true }
+    ).exec();
  
-    // response — keep it minimal. return empRefId and maybe employee basic info from populate
+    if (!updated) {
+      // someone else set it in the meantime
+      return res.status(409).json({ error: 'Another user logged in just now. Please try again after logout.' });
+    }
+ 
+    // prepare employee payload (include isManager)
+    const emp = updated.employee_ref_id || null;
+    const employeePayload = emp ? {
+      _id: emp._id,
+      name: emp.name,
+      isManager: !!emp.isManager
+    } : null;
+ 
     return res.json({
       message: 'Login successful',
+      token,
       user: {
-        empRefId: login.empRefId,
-        // if populated, return employee simple info; otherwise return employeeId
-        employee: login.employeeId ? { id: login.employeeId._id, empId: login.employeeId.empId, name: login.employeeId.empName } : { id: login.employeeId }
+        employee_id: updated.employee_id,
+        employee: employeePayload
       }
     });
   } catch (err) {
@@ -48,25 +74,36 @@ async function login(req, res) {
 }
  
 function welcome(req, res) {
-  // passport attaches user (the small object you returned in passport strategy) to req.user
-  // You wanted just name and empid -> look at req.user.employee
-  const empRefId = req.user?.empRefId;
-  const name = req.user?.employee?.empName || req.user?.employee?.name || null;
-  return res.json({ message: `Welcome ${empRefId}`, user: { name, empRefId } });
+  const employee_id = req.user?.employee_id;
+  const emp = req.user?.employee_ref_id || {};
+  return res.json({
+    message: `Welcome ${employee_id}`,
+    user: {
+      name: emp.empName || null,
+      employee_id,
+      isManager: !!emp.isManager
+    }
+  });
 }
  
 async function logout(req, res) {
   try {
-    const token = req.cookies?.token;
+    const header = req.headers.authorization || '';
+    const token = header.startsWith('Bearer ') ? header.split(' ')[1] : null;
+ 
     if (!token) {
-      res.clearCookie(COOKIE_NAME);
-      return res.status(200).json({ message: 'No token present; cookie cleared' });
+      return res.status(200).json({ message: 'No token present' });
     }
  
-    // add token to blacklist
-    add(token);
-    // clear cookie on client
-    res.clearCookie(COOKIE_NAME);
+    addToBlacklist(token);
+ 
+    if (req.user && req.user._id) {
+      await Login.findByIdAndUpdate(req.user._id, { $unset: { activeToken: "" } }).exec();
+    } else {
+      // fallback: try to clear by token
+      await Login.findOneAndUpdate({ activeToken: token }, { $unset: { activeToken: "" } }).exec();
+    }
+ 
     return res.json({ message: 'Logout successful. Token blacklisted.' });
   } catch (err) {
     console.error(err);
