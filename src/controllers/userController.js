@@ -13,7 +13,7 @@ const calculateWorkHours = (clockIn, clockOut) => {
 exports.getAllEmployees = async (req, res, next) => {
     try {
         const employees = await Employee.find({})
-            .select('-attendance_id -leave_id');
+            .select('-attendance_id -leave_id'); 
 
         if (!employees || employees.length === 0) {
             return res.status(404).json({ message: 'No employees found' });
@@ -37,7 +37,7 @@ exports.getEmployeeWithAllAttendance = async (req, res, next) => {
             .populate({
                 path: 'attendance_id',
                 model: 'attendance',
-                options: { sort: { date: -1 } }
+                options: { sort: { date: -1 } } 
             })
             .exec();
 
@@ -53,7 +53,7 @@ exports.getEmployeeWithAllAttendance = async (req, res, next) => {
 
 exports.getLastFourDaysAttendance = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params; 
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ message: 'Invalid Employee ID format' });
@@ -64,9 +64,9 @@ exports.getLastFourDaysAttendance = async (req, res, next) => {
             .populate({
                 path: 'attendance_id',
                 model: 'attendance',
-                options: {
-                    sort: { date: -1 },
-                    limit: 4
+                options: { 
+                    sort: { date: -1 }, 
+                    limit: 4            
                 }
             })
             .exec();
@@ -86,7 +86,7 @@ exports.getLastFourDaysAttendance = async (req, res, next) => {
 
 exports.clockIn = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params; 
         const { date, clock_in } = req.body;
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -97,13 +97,13 @@ exports.clockIn = async (req, res, next) => {
         }
 
         const recordDate = new Date(date);
-
+        
         // Find existing record via population matching the date
         const employee = await Employee.findById(id)
             .populate({
                 path: 'attendance_id',
-                model: 'attendance',
-                match: { date: recordDate }
+                model: 'attendance', 
+                match: { date: recordDate } 
             });
 
         if (!employee) {
@@ -125,7 +125,7 @@ exports.clockIn = async (req, res, next) => {
         // 2. UPDATE Employee document: Push the new Attendance record ID into the array
         await Employee.findByIdAndUpdate(id, {
             $push: { attendance_id: newRecord._id }
-        }, { new: true, runValidators: true });
+        }, { new: true, runValidators: true }); 
 
         res.status(201).json({
             message: 'Clock-in recorded successfully. Employee reference updated.',
@@ -138,7 +138,7 @@ exports.clockIn = async (req, res, next) => {
 
 exports.editClockOutTime = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params; 
         const { date, clock_out } = req.body;
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -155,14 +155,14 @@ exports.editClockOutTime = async (req, res, next) => {
         const employee = await Employee.findById(id)
             .populate({
                 path: 'attendance_id',
-                model: 'attendance',
-                match: { date: recordDate }
+                model: 'attendance', 
+                match: { date: recordDate } 
             });
 
         if (!employee) {
             return res.status(404).json({ message: 'Employee not found' });
         }
-
+        
         const existingRecord = employee.attendance_id[0];
 
         if (!existingRecord) {

@@ -1,16 +1,28 @@
-// src/routes/authRoutes.js
+// routes/authRoutes.js
 const express = require('express');
-const router = express.Router();
-const passport=require('passport');
+const passport = require('passport');
 const { login, welcome, logout } = require('../controllers/authController');
-const checkBlacklist=require('../middleware/checkBlacklist');
-const { loginValidators }= require('../validators/authValidators');
+const { loginValidators } = require('../validators/authValidators');
+const { rejectBlacklistedTokens, ensureTokenMatchesActive } = require('../middleware/rejectBlacklistedTokens');
  
-router.post('/login',loginValidators, login);
-
-router.get('/welcome',checkBlacklist, passport.authenticate('jwt', { session:false}),welcome)
-
-router.post('/logout',checkBlacklist,logout);
+const router = express.Router();
  
+router.post('/login', loginValidators, login);
+ 
+router.get(
+  '/welcome',
+  rejectBlacklistedTokens,
+  passport.authenticate('jwt', { session: false }),
+  ensureTokenMatchesActive,
+  welcome
+);
+ 
+router.post(
+  '/logout',
+  rejectBlacklistedTokens,
+  passport.authenticate('jwt', { session: false }),
+  ensureTokenMatchesActive,
+  logout
+);
  
 module.exports = router;
