@@ -5,74 +5,146 @@ const Login = require('../models/loginModel');
 const { add: addToBlacklist } = require('../utils/tokenBlacklist');
 require('dotenv').config();
  
-async function login(req, res) {
+// async function login(req, res) {
+
+//   try {
+//     const { employee_id, password } = req.body;
+//     if (employee_id == null || !password) {
+//       return res.status(400).json({ error: 'employee_id and password required' });
+//     }
+ 
+//     // find login doc and populate employee details
+//     const loginDoc = await Login.findOne({ employee_id }).populate('employee_ref_id').exec();
+//     if (!loginDoc) return res.status(401).json({ error: 'Invalid credentials' });
+ 
+//     // verify password
+//     const match = await bcrypt.compare(password, loginDoc.password);
+//     if (!match) return res.status(401).json({ error: 'Invalid credentials' });
+ 
+//     // ensure single active session: check if someone else has activeToken
+//   if (loginDoc.activeToken) {
+//   try {
+//     jwt.verify(loginDoc.activeToken, process.env.JWT_SECRET || 'default_jwt_secret');
+//     // still valid -> block
+//     return res.status(409).json({ error: 'Already logged in. Logout first.' });
+//   } catch (err) {
+//     // expired/invalid -> clear it and continue
+//     await Login.findByIdAndUpdate(loginDoc._id, { $unset: { activeToken: "" } }).exec();
+//   }
+// }
+
+ 
+//     // create token
+//     const payload = { id: loginDoc._id, employee_id: loginDoc.employee_id , isManager:loginDoc.employee_ref_id?.isManager };
+//     const token = jwt.sign(payload, process.env.JWT_SECRET || 'default_jwt_secret', {
+//       expiresIn: process.env.JWT_EXPIRES_IN || '15m'
+//     });
+ 
+//     // atomically set activeToken only if currently null (avoid race)
+//     const updated = await Login.findOneAndUpdate(
+//       { _id: loginDoc._id, $or: [{ activeToken: { $exists: false } }, { activeToken: null }] },
+//       { $set: { activeToken: token } },
+//       { new: true }
+//     ).exec();
+//     // console.log(activeToken);
+ 
+//     if (!updated) {
+//       // someone else set it in the meantime
+//       return res.status(409).json({ error: 'Another user logged in just now. Please try again after logout.' });
+//     }
+ 
+//     // prepare employee payload (include isManager)
+//     const emp = updated.employee_ref_id || null;
+//     const employeePayload = emp ? {
+//       _id: emp._id,
+//       name: emp.name,
+//       isManager: !!emp.isManager
+//     } : null;
+ 
+//     return res.json({
+//       message: 'Login successful',
+//       token,
+//       user: {
+//         employee_id: updated.employee_id,
+//         employee: employeePayload
+//       }
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     return res.status(500).json({ error: 'Server error' });
+//   }
+// }
+ async function login(req, res) {
   try {
     const { employee_id, password } = req.body;
     if (employee_id == null || !password) {
       return res.status(400).json({ error: 'employee_id and password required' });
     }
- 
-    // find login doc and populate employee details
+
+    // ✅ Find login doc and populate employee details
     const loginDoc = await Login.findOne({ employee_id }).populate('employee_ref_id').exec();
     if (!loginDoc) return res.status(401).json({ error: 'Invalid credentials' });
- 
-    // verify password
+
+    // ✅ Verify password
     const match = await bcrypt.compare(password, loginDoc.password);
     if (!match) return res.status(401).json({ error: 'Invalid credentials' });
- 
-    // ensure single active session: check if someone else has activeToken
+
+    // ✅ Check for active session
     if (loginDoc.activeToken) {
-      // verify if token still valid
       try {
         jwt.verify(loginDoc.activeToken, process.env.JWT_SECRET || 'default_jwt_secret');
-        // still valid -> block
         return res.status(409).json({ error: 'Already logged in. Logout first.' });
       } catch (err) {
-        // expired/invalid -> clear it and continue
         await Login.findByIdAndUpdate(loginDoc._id, { $unset: { activeToken: "" } }).exec();
       }
     }
- 
-    // create token
-    const payload = { id: loginDoc._id, employee_id: loginDoc.employee_id };
+
+    // ✅ Create token using populated data
+    const payload = {
+      id: loginDoc._id,
+      employee_id: loginDoc.employee_id,
+      isManager: loginDoc.employee_ref_id?.isManager
+    };
+
     const token = jwt.sign(payload, process.env.JWT_SECRET || 'default_jwt_secret', {
-      expiresIn: process.env.JWT_EXPIRES_IN || '1h'
+      expiresIn: process.env.JWT_EXPIRES_IN || '15m'
     });
- 
-    // atomically set activeToken only if currently null (avoid race)
+
+    // ✅ Atomically set activeToken
     const updated = await Login.findOneAndUpdate(
       { _id: loginDoc._id, $or: [{ activeToken: { $exists: false } }, { activeToken: null }] },
       { $set: { activeToken: token } },
       { new: true }
     ).exec();
- 
+
     if (!updated) {
-      // someone else set it in the meantime
       return res.status(409).json({ error: 'Another user logged in just now. Please try again after logout.' });
     }
- 
-    // prepare employee payload (include isManager)
-    const emp = updated.employee_ref_id || null;
+
+    // ✅ Use loginDoc for populated employee data
+    const emp = loginDoc.employee_ref_id || null;
     const employeePayload = emp ? {
       _id: emp._id,
       name: emp.name,
-      isManager: !!emp.isManager
+      isManager: Boolean(emp.isManager)
     } : null;
- 
+
+    console.log('Resolved employee:', employeePayload); // Debug log
+
     return res.json({
       message: 'Login successful',
       token,
       user: {
-        employee_id: updated.employee_id,
+        employee_id: loginDoc.employee_id,
         employee: employeePayload
       }
     });
   } catch (err) {
-    console.error(err);
+    console.error('Login error:', err);
     return res.status(500).json({ error: 'Server error' });
   }
 }
- 
+
 function welcome(req, res) {
   const employee_id = req.user?.employee_id;
   const emp = req.user?.employee_ref_id || {};
@@ -112,3 +184,5 @@ async function logout(req, res) {
 }
  
 module.exports = { login, welcome, logout };
+
+
